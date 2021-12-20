@@ -56,23 +56,12 @@ control.onEvent(EventBusSource.MICROBIT_ID_BUTTON_A, EventBusValue.MICROBIT_EVT_
 function fej () {
     if (pins.digitalReadPin(DigitalPin.P7) == 1 && pins.digitalReadPin(DigitalPin.P9) == 1) {
         motorbit.forward(Speed)
-    } else if (pins.digitalReadPin(DigitalPin.P7) == 0 && pins.digitalReadPin(DigitalPin.P9) == 1) {
+    } else if (pins.digitalReadPin(DigitalPin.P7) == 0 || pins.digitalReadPin(DigitalPin.P9) == 0) {
         motorbit.back(Speed)
         basic.pause(BackTime)
-        motorbit.turnright(Speed)
-        basic.pause(TurnTime)
-        Repeed += 1
-    } else if (pins.digitalReadPin(DigitalPin.P7) == 1 && pins.digitalReadPin(DigitalPin.P9) == 0) {
-        motorbit.back(Speed)
-        basic.pause(BackTime)
-        motorbit.turnright(Speed)
-        basic.pause(TurnTime)
-        Repeed += 1
-    } else if (pins.digitalReadPin(DigitalPin.P7) == 0 && pins.digitalReadPin(DigitalPin.P9) == 0) {
-        motorbit.back(Speed)
-        basic.pause(BackTime)
-        motorbit.turnright(Speed)
-        basic.pause(TurnTime)
+        while (false && (pins.digitalReadPin(DigitalPin.P7) == 1 && pins.digitalReadPin(DigitalPin.P9) == 1)) {
+            motorbit.turnright(Speed)
+        }
         Repeed += 1
     }
 }
