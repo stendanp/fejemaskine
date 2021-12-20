@@ -1,9 +1,15 @@
 function Start () {
-    motorbit.back(Speed)
-    basic.pause(BackTime)
-    motorbit.turnright(Speed)
-    basic.pause(TurnTime)
+    while (BackCount <= BackTime) {
+        motorbit.back(Speed)
+        BackCount += 1
+    }
+    while (TurnCount <= TurnTime) {
+        motorbit.turnright(Speed)
+        TurnCount += 1
+    }
     Repeed += 1
+    TurnCount = 0
+    BackCount = 0
 }
 function find () {
     if (pins.digitalReadPin(DigitalPin.P7) == 1 && pins.digitalReadPin(DigitalPin.P9) == 1) {
@@ -12,15 +18,27 @@ function find () {
         motorbit.brake()
         PathFound = 1
     } else if (pins.digitalReadPin(DigitalPin.P7) == 0 && pins.digitalReadPin(DigitalPin.P9) == 1) {
-        motorbit.back(Speed)
-        basic.pause(BackTime)
-        motorbit.turnright(Speed)
-        basic.pause(TurnTime)
+        while (BackCount <= BackTime) {
+            motorbit.back(Speed)
+            BackCount += 1
+        }
+        while (TurnCount <= TurnTime && (pins.digitalReadPin(DigitalPin.P7) == 1 && pins.digitalReadPin(DigitalPin.P9) == 1)) {
+            motorbit.turnright(Speed)
+            TurnCount += 1
+        }
+        TurnCount = 0
+        BackCount = 0
     } else if (pins.digitalReadPin(DigitalPin.P7) == 0 && pins.digitalReadPin(DigitalPin.P9) == 0) {
-        motorbit.back(Speed)
-        basic.pause(BackTime)
-        motorbit.turnright(Speed)
-        basic.pause(TurnTime)
+        while (BackCount <= BackTime) {
+            motorbit.back(Speed)
+            BackCount += 1
+        }
+        while (TurnCount <= TurnTime && (pins.digitalReadPin(DigitalPin.P7) == 1 && pins.digitalReadPin(DigitalPin.P9) == 1)) {
+            motorbit.turnright(Speed)
+            TurnCount += 1
+        }
+        TurnCount = 0
+        BackCount = 0
     }
 }
 control.onEvent(EventBusSource.MICROBIT_ID_BUTTON_B, EventBusValue.MICROBIT_EVT_ANY, function () {
@@ -57,15 +75,21 @@ function fej () {
     if (pins.digitalReadPin(DigitalPin.P7) == 1 && pins.digitalReadPin(DigitalPin.P9) == 1) {
         motorbit.forward(Speed)
     } else if (pins.digitalReadPin(DigitalPin.P7) == 0 || pins.digitalReadPin(DigitalPin.P9) == 0) {
-        motorbit.back(Speed)
-        basic.pause(BackTime)
-        while (false && (pins.digitalReadPin(DigitalPin.P7) == 1 && pins.digitalReadPin(DigitalPin.P9) == 1)) {
+        while (BackCount <= BackTime) {
+            motorbit.back(Speed)
+            BackCount += 1
+        }
+        while (TurnCount <= TurnTime && (pins.digitalReadPin(DigitalPin.P7) == 1 && pins.digitalReadPin(DigitalPin.P9) == 1)) {
             motorbit.turnright(Speed)
+            TurnCount += 1
         }
         Repeed += 1
+        BackCount = 0
+        TurnCount = 0
     }
 }
-let Repeed = 0
+let BackCount = 0
+let TurnCount = 0
 let home = 0
 let PathFound = 0
 let homeStart = 0
@@ -74,13 +98,16 @@ let TurnTime = 0
 let BackTime = 0
 let Speed = 0
 Speed = 22
-BackTime = 900
-TurnTime = 1000
+BackTime = 2000
+TurnTime = 2000
 let pas = 40
 start = 0
+let Repeed = 0
 homeStart = 0
 PathFound = 0
 home = 0
+TurnCount = 0
+BackCount = 0
 basic.forever(function () {
     if (start == 1 && home == 0) {
         if (Repeed == 0) {
