@@ -1,3 +1,16 @@
+function BackTurn () {
+    while (BackCount <= BackTime) {
+        motorbit.back(Speed)
+        BackCount += 1
+    }
+    while (TurnCount <= TurnTime && (pins.digitalReadPin(DigitalPin.P7) == 1 && pins.digitalReadPin(DigitalPin.P9) == 1)) {
+        motorbit.turnright(Speed)
+        TurnCount += 1
+    }
+    Repeed += 1
+    BackCount = 0
+    TurnCount = 0
+}
 function Start () {
     while (BackCount <= BackTime) {
         motorbit.back(Speed)
@@ -18,27 +31,9 @@ function find () {
         motorbit.brake()
         PathFound = 1
     } else if (pins.digitalReadPin(DigitalPin.P7) == 0 && pins.digitalReadPin(DigitalPin.P9) == 1) {
-        while (BackCount <= BackTime) {
-            motorbit.back(Speed)
-            BackCount += 1
-        }
-        while (TurnCount <= TurnTime && (pins.digitalReadPin(DigitalPin.P7) == 1 && pins.digitalReadPin(DigitalPin.P9) == 1)) {
-            motorbit.turnright(Speed)
-            TurnCount += 1
-        }
-        TurnCount = 0
-        BackCount = 0
+        BackTurn()
     } else if (pins.digitalReadPin(DigitalPin.P7) == 0 && pins.digitalReadPin(DigitalPin.P9) == 0) {
-        while (BackCount <= BackTime) {
-            motorbit.back(Speed)
-            BackCount += 1
-        }
-        while (TurnCount <= TurnTime && (pins.digitalReadPin(DigitalPin.P7) == 1 && pins.digitalReadPin(DigitalPin.P9) == 1)) {
-            motorbit.turnright(Speed)
-            TurnCount += 1
-        }
-        TurnCount = 0
-        BackCount = 0
+        BackTurn()
     }
 }
 control.onEvent(EventBusSource.MICROBIT_ID_BUTTON_B, EventBusValue.MICROBIT_EVT_ANY, function () {
@@ -75,17 +70,7 @@ function fej () {
     if (pins.digitalReadPin(DigitalPin.P7) == 1 && pins.digitalReadPin(DigitalPin.P9) == 1) {
         motorbit.forward(Speed)
     } else if (pins.digitalReadPin(DigitalPin.P7) == 0 || pins.digitalReadPin(DigitalPin.P9) == 0) {
-        while (BackCount <= BackTime) {
-            motorbit.back(Speed)
-            BackCount += 1
-        }
-        while (TurnCount <= TurnTime && (pins.digitalReadPin(DigitalPin.P7) == 1 && pins.digitalReadPin(DigitalPin.P9) == 1)) {
-            motorbit.turnright(Speed)
-            TurnCount += 1
-        }
-        Repeed += 1
-        BackCount = 0
-        TurnCount = 0
+        BackTurn()
     }
 }
 let BackCount = 0
