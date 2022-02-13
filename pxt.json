@@ -9,7 +9,8 @@
         "neopixel": "github:microsoft/pxt-neopixel#v0.7.3",
         "MakerBit-IR-Receiver": "github:1010technologies/pxt-makerbit-ir-receiver#v1.5.14",
         "pxt-sonar": "github:Microsoft/pxt-sonar#v0.0.5",
-        "motorbit": "github:tinkertanker/pxt-motorbit#v2.0.0"
+        "motorbit": "github:tinkertanker/pxt-motorbit#v2.0.0",
+        "MakerBit-Ultrasonic": "github:1010technologies/pxt-makerbit-ultrasonic#v1.0.8"
     },
     "files": [
         "main.blocks",
@@ -21,7 +22,7 @@
         "test.ts"
     ],
     "targetVersions": {
-        "target": "4.0.16",
+        "target": "4.0.17",
         "targetId": "microbit"
     },
     "supportedTargets": [

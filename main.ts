@@ -93,6 +93,11 @@ PathFound = 0
 home = 0
 TurnCount = 0
 BackCount = 0
+let Afstand = sonar.ping(
+DigitalPin.P1,
+DigitalPin.P2,
+PingUnit.Centimeters
+)
 basic.forever(function () {
     if (start == 1 && home == 0) {
         if (Repeed == 0) {
