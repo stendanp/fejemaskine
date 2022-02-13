@@ -69,10 +69,16 @@ control.onEvent(EventBusSource.MICROBIT_ID_BUTTON_A, EventBusValue.MICROBIT_EVT_
 function fej () {
     if (pins.digitalReadPin(DigitalPin.P7) == 1 && pins.digitalReadPin(DigitalPin.P9) == 1) {
         motorbit.forward(Speed)
-    } else if (pins.digitalReadPin(DigitalPin.P7) == 0 || pins.digitalReadPin(DigitalPin.P9) == 0) {
+        Afstand = sonar.ping(
+        DigitalPin.P3,
+        DigitalPin.P4,
+        PingUnit.Centimeters
+        )
+    } else if (pins.digitalReadPin(DigitalPin.P7) == 0 || pins.digitalReadPin(DigitalPin.P9) == 0 || Afstand < 5) {
         BackTurn()
     }
 }
+let Afstand = 0
 let BackCount = 0
 let TurnCount = 0
 let home = 0
@@ -93,11 +99,6 @@ PathFound = 0
 home = 0
 TurnCount = 0
 BackCount = 0
-let Afstand = sonar.ping(
-DigitalPin.P1,
-DigitalPin.P2,
-PingUnit.Centimeters
-)
 basic.forever(function () {
     if (start == 1 && home == 0) {
         if (Repeed == 0) {
